@@ -1,4 +1,5 @@
 # task_manager
+<<<<<<< HEAD
 
 A new Flutter project.
 
@@ -14,3 +15,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+phần mềm quản lý công việc
+>>>>>>> b7996b3e16ba2bf93cabb76ad1a803cf21d3ba96
