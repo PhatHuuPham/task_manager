@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/features/task_manager/presentation/srceen/task_create.dart';
 
 class TaskPage extends StatelessWidget {
   const TaskPage({super.key});
@@ -19,7 +20,12 @@ class TaskPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Thêm công việc
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const TaskCreatePage(),
+            ),
+          );
         },
         child: const Icon(Icons.add),
       ),
