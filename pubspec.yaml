@@ -39,6 +39,7 @@ dependencies:
   path: ^1.9.0
   firebase_core: ^3.8.1
   provider: ^6.1.2
+  intl: ^0.20.1
   
 
 dev_dependencies:
