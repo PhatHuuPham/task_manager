@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+// import 'package:task_manager/features/task_manager/presentation/srceen/folder_list.dart';
 
 class TaskCreatePage extends StatefulWidget {
   const TaskCreatePage({super.key});
@@ -45,22 +46,21 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Task Create"),
-          // automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.notifications),
-              onPressed: () {
-                // Thêm công việc
-              },
-            ),
-          ],
-        ),
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              padding: const EdgeInsets.only(bottom: 1000),
+      appBar: AppBar(
+        title: const Text("Task Create"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              // Thêm công việc
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
               child: Column(
                 children: [
                   Container(
@@ -77,7 +77,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
                     child: const TextField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Task description',
+                        labelText: 'Task folder',
                       ),
                     ),
                   ),
@@ -89,7 +89,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
                           child: Text(
                             _selectedDate == null
                                 ? 'No Date Chosen!'
-                                : 'Picked Date: ${DateFormat.yMd().format(_selectedDate!)}',
+                                : ' ${DateFormat.yMd().format(_selectedDate!)}',
                           ),
                         ),
                         TextButton(
@@ -107,7 +107,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
                           child: Text(
                             _selectedTime == null
                                 ? 'No Time Chosen!'
-                                : 'Picked Time: ${_selectedTime!.format(context)}',
+                                : ' ${_selectedTime!.format(context)}',
                           ),
                         ),
                         TextButton(
@@ -117,33 +117,49 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
                       ],
                     ),
                   ),
+                  // Container(
+                  //   padding: const EdgeInsets.all(10),
+                  //   child: TextButton(
+                  //     onPressed: () => {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (context) => const FolderListPage(),
+                  //         ),
+                  //       ),
+                  //     },
+                  //     child: const Text('Choose Folder'),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  TextButton(
-                    onPressed: () => {
-                      // Lưu công việc
-                    },
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 60, vertical: 25),
-                    ),
-                    child: const Text(
-                      'Lưu',
-                      style: TextStyle(),
-                    ),
+          ),
+          Container(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  onPressed: () => {
+                    // Lưu công việc
+                  },
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 60, vertical: 25),
                   ),
-                ],
-              ),
-            )
-          ],
-        ));
+                  child: const Text(
+                    'Lưu',
+                    style: TextStyle(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
