@@ -24,13 +24,13 @@ class _FolderListPageState extends State<FolderListPage> {
       ),
       body: const Column(
         children: [
-          const ListTile(
+          ListTile(
             title: Text("Folder 1"),
           ),
-          const ListTile(
+          ListTile(
             title: Text("Folder 2"),
           ),
-          const ListTile(
+          ListTile(
             title: Text("Folder 3"),
           ),
         ],

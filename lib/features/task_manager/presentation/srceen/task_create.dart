@@ -10,8 +10,31 @@ class TaskCreatePage extends StatefulWidget {
 }
 
 class _TaskCreatePageState extends State<TaskCreatePage> {
+  final TextEditingController _taskNameController = TextEditingController();
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
+  bool _isSaved = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _taskNameController.addListener(_saveTask);
+  }
+
+  @override
+  void dispose() {
+    _taskNameController.dispose();
+    super.dispose();
+  }
+
+  void _saveTask() {
+    final taskName = _taskNameController.text;
+    final taskDate = _selectedDate;
+    final taskTime = _selectedTime;
+    setState(() {
+      _isSaved = taskName.isNotEmpty && taskDate != null && taskTime != null;
+    });
+  }
 
   void _showDatePicker() {
     showDatePicker(
@@ -25,6 +48,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
       }
       setState(() {
         _selectedDate = pickedDate;
+        _saveTask();
       });
     });
   }
@@ -39,6 +63,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
       }
       setState(() {
         _selectedTime = pickedTime;
+        _saveTask();
       });
     });
   }
@@ -65,8 +90,9 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(10),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: _taskNameController,
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Task name',
                       ),
@@ -136,23 +162,24 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom + 10,
-            ),
+            // padding: EdgeInsets.only(
+            //   bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+            // ),
+            padding: const EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
-                  onPressed: () => {
-                    // Lưu công việc
-                  },
+                  onPressed: _isSaved ? () {} : null,
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 60, vertical: 25),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Lưu',
-                    style: TextStyle(),
+                    style: TextStyle(
+                      color: _isSaved ? Colors.black : Colors.grey,
+                    ),
                   ),
                 ),
               ],
