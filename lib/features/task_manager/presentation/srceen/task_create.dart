@@ -1,6 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-// import 'package:task_manager/features/task_manager/presentation/srceen/folder_list.dart';
 
 class TaskCreatePage extends StatefulWidget {
   const TaskCreatePage({super.key});
@@ -25,6 +25,14 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
   void dispose() {
     _taskNameController.dispose();
     super.dispose();
+  }
+
+  void addTask() async {
+    await FirebaseFirestore.instance.collection('tasks').add({
+      'taskName': _taskNameController.text,
+      'taskDate': _selectedDate,
+      'taskTime': _selectedTime,
+    });
   }
 
   void _saveTask() {
