@@ -11,6 +11,8 @@ class TaskCreatePage extends StatefulWidget {
 
 class _TaskCreatePageState extends State<TaskCreatePage> {
   final TextEditingController _taskNameController = TextEditingController();
+  final TextEditingController _taskDescriptionController =
+      TextEditingController();
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
   bool _isSaved = false;
@@ -27,11 +29,15 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
     super.dispose();
   }
 
-  void addTask() async {
+  void addTask(
+      String name, String description, String date, String time) async {
     await FirebaseFirestore.instance.collection('tasks').add({
-      'taskName': _taskNameController.text,
-      'taskDate': _selectedDate,
-      'taskTime': _selectedTime,
+      'name': name,
+      'description': description,
+      'date': date, // Lưu định dạng yyyy-MM-dd
+      'time': time, // Lưu định dạng HH:mm
+      'createdAt':
+          FieldValue.serverTimestamp(), // Ngày giờ tạo tự động từ server
     });
   }
 
@@ -108,10 +114,11 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
                   ),
                   Container(
                     padding: const EdgeInsets.all(10),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: _taskDescriptionController,
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Task folder',
+                        labelText: 'Task description',
                       ),
                     ),
                   ),
@@ -178,7 +185,17 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
-                  onPressed: _isSaved ? () {} : null,
+                  onPressed: _isSaved
+                      ? () {
+                          addTask(
+                            _taskNameController.text,
+                            _taskDescriptionController.text,
+                            DateFormat('yyyy-MM-dd').format(_selectedDate!),
+                            _selectedTime!.format(context),
+                          );
+                          Navigator.pop(context);
+                        }
+                      : null,
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 60, vertical: 25),
