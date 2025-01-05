@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager/features/task_manager/presentation/srceen/task_create.dart';
+import 'package:task_manager/features/task_manager/presentation/srceen/task_detail.dart';
 
 class TaskPage extends StatelessWidget {
   const TaskPage({super.key});
@@ -46,6 +47,14 @@ class TaskPage extends StatelessWidget {
                 return ListTile(
                   title: Text(task['name']),
                   subtitle: Text(task['date']),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TaskDetailPage(taskId: task.id),
+                      ),
+                    );
+                  },
                 );
               },
             );
