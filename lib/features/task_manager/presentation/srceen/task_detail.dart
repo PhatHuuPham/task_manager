@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class TaskDetailPage extends StatefulWidget {
   final String taskId;
@@ -15,9 +16,10 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
-  final TextEditingController _timeController = TextEditingController();
-
+  String date = '';
+  String time = '';
+  DateTime? _selectedDate;
+  TimeOfDay? _selectedTime;
   @override
   void initState() {
     super.initState();
@@ -31,8 +33,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
       setState(() {
         _titleController.text = taskDoc['name'];
         _descriptionController.text = taskDoc['description'];
-        _dateController.text = taskDoc['date'];
-        _timeController.text = taskDoc['time'];
+        date = taskDoc['date'];
+        time = taskDoc['time'];
       });
     }
   }
@@ -41,8 +43,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     await _firestore.collection('tasks').doc(widget.taskId).update({
       'name': _titleController.text,
       'description': _descriptionController.text,
-      'date': _dateController.text,
-      'time': _timeController.text,
+      'date': date,
+      'time': time,
     });
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
@@ -52,6 +54,54 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
     await _firestore.collection('tasks').doc(widget.taskId).delete();
     // ignore: use_build_context_synchronously
     Navigator.pop(context);
+  }
+
+  void _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = pickedDate;
+        chageDate();
+      });
+    });
+  }
+
+  void _showTimePicker() {
+    showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    ).then((pickedTime) {
+      if (pickedTime == null) {
+        return;
+      }
+      setState(() {
+        _selectedTime = pickedTime;
+        chageTime();
+      });
+    });
+  }
+
+  void chageDate() {
+    if (_selectedDate != null) {
+      setState(() {
+        date = DateFormat('yyyy-MM-dd').format(_selectedDate!);
+      });
+    }
+  }
+
+  void chageTime() {
+    if (_selectedTime != null) {
+      setState(() {
+        time = _selectedTime!.format(context);
+      });
+    }
   }
 
   @override
@@ -78,13 +128,41 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
               controller: _descriptionController,
               decoration: const InputDecoration(labelText: 'Description'),
             ),
-            TextField(
-              controller: _dateController,
-              decoration: const InputDecoration(labelText: 'date'),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      _selectedDate == null
+                          ? date
+                          : ' ${DateFormat.yMd().format(_selectedDate!)}',
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: _showDatePicker,
+                    child: const Text('Choose Date'),
+                  ),
+                ],
+              ),
             ),
-            TextField(
-              controller: _timeController,
-              decoration: const InputDecoration(labelText: 'time'),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      _selectedTime == null
+                          ? time
+                          : ' ${_selectedTime!.format(context)}',
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: _showTimePicker,
+                    child: const Text('Choose Time'),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
