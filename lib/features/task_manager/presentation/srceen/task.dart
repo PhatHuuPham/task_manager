@@ -45,8 +45,29 @@ class TaskPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 final task = tasks[index];
                 return ListTile(
-                  title: Text(task['name']),
+                  title: Text(
+                    task['name'],
+                    style: TextStyle(
+                      decoration: task.data().containsKey('isDone')
+                          ? task['isDone']
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none
+                          : TextDecoration.none,
+                    ),
+                  ),
                   subtitle: Text(task['date']),
+                  trailing: Checkbox(
+                      value: task.data().containsKey('isDone')
+                          ? task['isDone']
+                          : false,
+                      onChanged: (value) {
+                        FirebaseFirestore.instance
+                            .collection('tasks')
+                            .doc(task.id)
+                            .update({
+                          'isDone': value,
+                        });
+                      }),
                   onTap: () {
                     Navigator.push(
                       context,

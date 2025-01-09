@@ -38,6 +38,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
       'time': time, // Lưu định dạng HH:mm
       'createdAt':
           FieldValue.serverTimestamp(), // Ngày giờ tạo tự động từ server
+      'isDone': false, // Mặc định chưa hoàn thành
     });
   }
 
