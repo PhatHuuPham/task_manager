@@ -56,18 +56,36 @@ class TaskPage extends StatelessWidget {
                     ),
                   ),
                   subtitle: Text(task['date']),
-                  trailing: Checkbox(
-                      value: task.data().containsKey('isDone')
-                          ? task['isDone']
-                          : false,
-                      onChanged: (value) {
-                        FirebaseFirestore.instance
-                            .collection('tasks')
-                            .doc(task.id)
-                            .update({
-                          'isDone': value,
-                        });
-                      }),
+                  leading: InkWell(
+                    onTap: () {
+                      FirebaseFirestore.instance
+                          .collection('tasks')
+                          .doc(task.id)
+                          .update({
+                        'isDone': !task['isDone'],
+                      });
+                    },
+                    child: SizedBox(
+                      width: 40,
+                      height: 60,
+                      child: Checkbox(
+                        value: task.data().containsKey('isDone')
+                            ? task['isDone']
+                            : false,
+                        onChanged: (value) {
+                          FirebaseFirestore.instance
+                              .collection('tasks')
+                              .doc(task.id)
+                              .update({
+                            'isDone': value,
+                          });
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ),
                   onTap: () {
                     Navigator.push(
                       context,
