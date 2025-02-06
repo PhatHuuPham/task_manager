@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/features/task_manager/presentation/srceen/authetiation.dart';
 import 'package:task_manager/features/task_manager/presentation/srceen/home.dart';
 import 'package:task_manager/features/task_manager/presentation/srceen/setting.dart';
 import 'package:task_manager/features/task_manager/presentation/srceen/task.dart';
@@ -40,6 +41,7 @@ class _MainScreenState extends State<MainScreen> {
           HomePage(),
           TaskPage(),
           SettingPage(),
+          AuthenticationPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -67,6 +69,10 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'authentication',
           ),
         ],
       ),
