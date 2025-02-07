@@ -11,8 +11,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform, // Provide the options
   );
   runApp(
-    ChangeNotifierProvider(
-        create: (context) => TaskProvider(), child: const MyApp()),
+    // ChangeNotifierProvider(
+    //     create: (context) => TaskProvider(), child: const MyApp()),
+    const MyApp(),
   );
 }
 
