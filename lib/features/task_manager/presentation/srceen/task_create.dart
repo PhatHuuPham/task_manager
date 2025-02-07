@@ -11,41 +11,6 @@ class TaskCreatePage extends StatefulWidget {
 }
 
 class _TaskCreatePageState extends State<TaskCreatePage> {
-  Future<void> _selectDate(BuildContext context) async {
-    try {
-      final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2101),
-      );
-
-      if (picked != null) {
-        // ignore: use_build_context_synchronously
-        Provider.of<TaskProvider>(context, listen: false)
-            .updateSelectDate(picked);
-      }
-    } catch (e) {
-      print('Error selecting date: $e');
-    }
-  }
-
-  Future<void> _selectTime(BuildContext context) async {
-    try {
-      final TimeOfDay? picked = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.now(),
-      );
-
-      if (picked != null) {
-        Provider.of<TaskProvider>(context, listen: false)
-            .updateSelectTime(picked);
-      }
-    } catch (e) {
-      print('Error selecting time: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -101,7 +66,10 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
                               ),
                             ),
                             TextButton(
-                              onPressed: () => _selectDate(context),
+                              onPressed: () => Provider.of<TaskProvider>(
+                                      context,
+                                      listen: false)
+                                  .selectDate(context),
                               child: const Text('Choose Date'),
                             ),
                           ],
@@ -119,7 +87,10 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
                               ),
                             ),
                             TextButton(
-                              onPressed: () => _selectTime(context),
+                              onPressed: () => Provider.of<TaskProvider>(
+                                      context,
+                                      listen: false)
+                                  .selectTime(context),
                               child: const Text('Choose Time'),
                             ),
                           ],

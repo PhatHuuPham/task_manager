@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -23,16 +25,40 @@ class TaskProvider extends ChangeNotifier {
     super.dispose();
   }
 
-  void updateSelectDate(DateTime date) {
-    selectedDate = date;
-    _saveTask();
-    notifyListeners();
+  Future<void> selectDate(BuildContext context) async {
+    try {
+      final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+
+      if (picked != null) {
+        selectedDate = picked;
+        _saveTask();
+        notifyListeners();
+      }
+    } catch (e) {
+      print('Error selecting date: $e');
+    }
   }
 
-  void updateSelectTime(TimeOfDay time) {
-    selectedTime = time;
-    _saveTask();
-    notifyListeners();
+  Future<void> selectTime(BuildContext context) async {
+    try {
+      final TimeOfDay? picked = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+
+      if (picked != null) {
+        selectedTime = picked;
+        _saveTask();
+        notifyListeners();
+      }
+    } catch (e) {
+      print('Error selecting time: $e');
+    }
   }
 
   void _saveTask() {

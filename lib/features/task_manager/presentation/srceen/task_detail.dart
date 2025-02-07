@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:task_manager/features/task_manager/logic/providers/task_provider.dart';
 
 class TaskDetailPage extends StatefulWidget {
   final String taskId;
@@ -106,70 +108,75 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Task Detail'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.delete),
-            onPressed: _deleteTask,
+    return ChangeNotifierProvider(
+      create: (context) => TaskProvider(),
+      child: Consumer<TaskProvider>(
+        builder: (context, value, child) => Scaffold(
+          appBar: AppBar(
+            title: const Text('Task Detail'),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: _deleteTask,
+              ),
+            ],
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _titleController,
-              decoration: const InputDecoration(labelText: 'Title'),
-            ),
-            TextField(
-              controller: _descriptionController,
-              decoration: const InputDecoration(labelText: 'Description'),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      _selectedDate == null
-                          ? date
-                          : ' ${DateFormat.yMd().format(_selectedDate!)}',
-                    ),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _titleController,
+                  decoration: const InputDecoration(labelText: 'Title'),
+                ),
+                TextField(
+                  controller: _descriptionController,
+                  decoration: const InputDecoration(labelText: 'Description'),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          _selectedDate == null
+                              ? date
+                              : ' ${DateFormat.yMd().format(_selectedDate!)}',
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: _showDatePicker,
+                        child: const Text('Choose Date'),
+                      ),
+                    ],
                   ),
-                  TextButton(
-                    onPressed: _showDatePicker,
-                    child: const Text('Choose Date'),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          _selectedTime == null
+                              ? time
+                              : ' ${_selectedTime!.format(context)}',
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: _showTimePicker,
+                        child: const Text('Choose Time'),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _updateTask,
+                  child: const Text('Update Task'),
+                ),
+              ],
             ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      _selectedTime == null
-                          ? time
-                          : ' ${_selectedTime!.format(context)}',
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: _showTimePicker,
-                    child: const Text('Choose Time'),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _updateTask,
-              child: const Text('Update Task'),
-            ),
-          ],
+          ),
         ),
       ),
     );
