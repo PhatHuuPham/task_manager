@@ -5,6 +5,7 @@ class AuthenticationPage extends StatefulWidget {
   const AuthenticationPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _AuthenticationPageState createState() => _AuthenticationPageState();
 }
 
