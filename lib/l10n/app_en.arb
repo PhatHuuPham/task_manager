@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+  "settings_title": "Settings",
+  "language_title": "Language",
+  "notification_title": "Notifications",
+  "logout_title": "Logout",
+  "home": "Home",
+  "list_task": "List_task",
+  "@list_task": {
+        "description": "Title for the task list section"
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "@@locale": "vi",
+  "settings_title": "Cài đặt",
+  "language_title": "Ngôn ngữ",
+  "notification_title": "Thông báo",
+  "logout_title": "Đăng xuất",
+  "home": "Trang chính",
+  "list_task": "Danh sách công việc"
+}

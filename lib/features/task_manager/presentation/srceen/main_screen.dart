@@ -40,8 +40,8 @@ class _MainScreenState extends State<MainScreen> {
         children: const [
           HomePage(),
           TaskPage(),
-          SettingPage(),
           AuthenticationPage(),
+          SettingPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -71,8 +71,8 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Profile',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'authentication',
+            icon: Icon(Icons.settings),
+            label: 'settings',
           ),
         ],
       ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -21,10 +23,10 @@ class HomePage extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(10),
-            child: const Text(
-              "Danh sách công việc",
-              style: TextStyle(
-                  fontSize: 15,
+            child: Text(
+              AppLocalizations.of(context)!.list_task,
+              style: const TextStyle(
+                  fontSize: 20,
                   // fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
