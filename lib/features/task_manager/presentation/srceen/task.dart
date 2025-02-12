@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:task_manager/features/task_manager/logic/providers/task_provider.dart';
 import 'package:task_manager/features/task_manager/presentation/srceen/task_create.dart';
 import 'package:task_manager/features/task_manager/presentation/srceen/task_detail.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskPage extends StatelessWidget {
   const TaskPage({super.key});
@@ -15,7 +16,7 @@ class TaskPage extends StatelessWidget {
       child: Consumer<TaskProvider>(
         builder: (context, value, child) => Scaffold(
           appBar: AppBar(
-            title: const Text("Task"),
+            title: Text(AppLocalizations.of(context)!.list_task),
             actions: [
               IconButton(
                 icon: const Icon(Icons.notifications),

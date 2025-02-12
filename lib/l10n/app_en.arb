@@ -1,11 +1,22 @@
 {
   "@@locale": "en",
-  "settings_title": "Settings",
-  "language_title": "Language",
-  "notification_title": "Notifications",
-  "logout_title": "Logout",
   "home": "Home",
-  "list_task": "List_task",
+  "@home": {
+        "description": "home page"
+    },
+  "task": "Task",
+  "@task": {
+        "description": "task"
+    },
+  "settings": "Settings",
+  "@settings": {
+        "description": "settings"
+    },
+  "language": "language",
+  "@language": {
+        "description": "language settings"
+    },
+  "list_task": "List task",
   "@list_task": {
         "description": "Title for the task list section"
     }
