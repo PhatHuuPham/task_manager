@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/features/task_manager/logic/providers/task_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskDetailPage extends StatefulWidget {
   final String taskId;
@@ -21,7 +22,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
       child: Consumer<TaskProvider>(
         builder: (context, value, child) => Scaffold(
           appBar: AppBar(
-            title: const Text('Task Detail'),
+            title: Text(AppLocalizations.of(context)!.task_detail),
             actions: [
               IconButton(
                 icon: const Icon(Icons.delete),

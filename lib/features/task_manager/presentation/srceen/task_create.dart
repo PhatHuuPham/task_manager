@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/features/task_manager/logic/providers/task_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskCreatePage extends StatefulWidget {
   const TaskCreatePage({super.key});
@@ -18,7 +19,7 @@ class _TaskCreatePageState extends State<TaskCreatePage> {
       child: Consumer<TaskProvider>(
         builder: (context, value, child) => Scaffold(
           appBar: AppBar(
-            title: const Text("Task Create"),
+            title: Text(AppLocalizations.of(context)!.task_create),
             actions: [
               IconButton(
                 icon: const Icon(Icons.notifications),

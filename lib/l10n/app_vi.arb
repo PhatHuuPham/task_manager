@@ -2,6 +2,8 @@
   "@@locale": "vi",
   "home": "Trang chính",
   "task": "Công việc",
+  "task_detail": "Chi tiết công việc",
+  "task_create": "Tạo công việc",
   "settings": "Cài đặt",
   "language": "Ngôn ngữ",
   "list_task": "Danh sách công việc"
