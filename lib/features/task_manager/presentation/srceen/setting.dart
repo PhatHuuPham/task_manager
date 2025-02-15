@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/features/task_manager/logic/providers/setting_provider.dart';
+import 'package:task_manager/features/task_manager/services/google_sign_in.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -25,6 +26,7 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     final settingProvider = Provider.of<SettingProvider>(context);
+    final authService = Provider.of<AuthService>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -75,6 +77,22 @@ class _SettingPageState extends State<SettingPage> {
               },
             ),
           ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.people),
+            title: const Text('Đăng nhập'),
+            onTap: () async {
+              try {
+                await authService.signInWithGoogle();
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Đăng nhập thất bại: $e'),
+                  ),
+                );
+              }
+            },
+          )
         ],
       ),
     );

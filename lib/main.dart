@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:task_manager/features/task_manager/logic/providers/setting_provider.dart';
 import 'package:task_manager/features/task_manager/presentation/srceen/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:task_manager/features/task_manager/services/google_sign_in.dart';
 import 'firebase_options.dart'; // Import the Firebase options
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -13,8 +14,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform, // Provide the options
   );
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => SettingProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => SettingProvider()),
+        Provider(create: (_) => AuthService()),
+      ],
       child: const MyApp(),
     ),
   );
